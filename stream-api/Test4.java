@@ -31,13 +31,16 @@ class Employee{
 
 public class Test4 {
     public static void main(String[] args) {
-        List<Integer> list = Arrays.asList(1, 1, 3, 3, 2, 2, 6, 3, 0);
+        //terminal operations
 
-        List<Integer> collectedList = list.stream().collect(Collectors.toList());
-        System.out.println(collectedList);
-
-        Set<Integer> set = list.stream().collect(Collectors.toSet());
-        System.out.println(set);
+//
+//        List<Integer> list = Arrays.asList(1, 1, 3, 3, 2, 2, 6, 3, 0);
+//
+//        List<Integer> collectedList = list.stream().collect(Collectors.toList());
+//        System.out.println(collectedList);
+//
+//        Set<Integer> set = list.stream().collect(Collectors.toSet());
+//        System.out.println(set);
 
 //        List<Employee> employees = Arrays.asList(
 //                new Employee("ram", 27, "culcutta"),
@@ -46,35 +49,58 @@ public class Test4 {
 //        Map<String, Integer> map = employees.stream().collect(Collectors.toMap(Employee::getName, Employee::getAge));
 //        System.out.println(map);
 
-        List<Employee> employees = Arrays.asList(
-                new Employee("baburao", 45, "mumbai", 4500),
-                new Employee("ram", 27, "kalkatta", 0),
-                new Employee("shyam", 25, "jaipur", 1000),
-                new Employee("sam", 25, "delhi", 1000));
-        employees.stream()
-                .sorted(Comparator.comparing(Employee::getSalary).thenComparing(Employee::getAge).thenComparing(Employee::getCity))
-                .forEach(x-> System.out.println(x.getName()+" : "+ x.getAge()+" : "+ x.getCity()+" : "+x.getSalary()));
-        List<Employee> e = employees.stream()
-                .sorted(Comparator.comparing(Employee::getSalary).thenComparing(Employee::getAge).thenComparing(Employee::getCity))
-                .toList();
+//        List<Employee> employees = Arrays.asList(
+//                new Employee("baburao", 45, "mumbai", 4500),
+//                new Employee("ram", 27, "kalkatta", 0),
+//                new Employee("shyam", 25, "jaipur", 1000),
+//                new Employee("sam", 25, "delhi", 1000));
+//        employees.stream()
+//                .sorted(Comparator.comparing(Employee::getSalary).thenComparing(Employee::getAge).thenComparing(Employee::getCity))
+//                .forEach(x-> System.out.println(x.getName()+" : "+ x.getAge()+" : "+ x.getCity()+" : "+x.getSalary()));
+//        List<Employee> e = employees.stream()
+//                .sorted(Comparator.comparing(Employee::getSalary).thenComparing(Employee::getAge).thenComparing(Employee::getCity))
+//                .toList();
 
 
 
-        HashMap<String, Integer> map = new HashMap<>();
+        Map<String, Integer> map = new HashMap<>();
         map.put("baburao", 45);
         map.put("ram", 27);
         map.put("shyam", 25);
         map.put("sam", 25);
 
-//        HashMap<String, Integer> sortedMap = new HashMap<>();
-//        map.entrySet().stream().sorted(Map.Entry.<String, Integer>.comparingByValue()
-//                .thenComparing(Map.Entry.<String, Integer>.comparingByKey())).forEachOrdered(x-> sortedMap.put(x.getKey(), x.getValue()));
+        Map<String, Integer> sortedMap = new LinkedHashMap<>();
+        map.entrySet().stream().sorted(Map.Entry.comparingByValue()).forEachOrdered(x-> sortedMap.put(x.getKey(), x.getValue()));
+        System.out.println(sortedMap);
+        Map<String, Integer> sortedMap1 = new LinkedHashMap<>();
+        map.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEachOrdered(x->sortedMap1.put(x.getKey(), x.getValue()));
+        System.out.println(sortedMap1);
+        Map<String, Integer> sortedMap2 = new LinkedHashMap<>();
+        map.entrySet().stream().sorted(Map.Entry.<String, Integer>comparingByValue().thenComparing(Map.Entry.comparingByKey())).forEachOrdered(x->sortedMap2.put(x.getKey(), x.getValue()));
+        System.out.println(sortedMap2);
+
+
+
+//        map.entrySet().stream().sorted(
+//                .thenComparing(Map.Entry.comparingByKey()))
 //
-//        map.entrySet().stream().sorted(Map.Entry.comparingByValue()
-//                        .thenComparing(comparingByKey()))
-        //terminal operations
-        List<String> names = Arrays.asList("ram", null, "shyam", "baburao", null);
-        String result = names.stream().filter(Objects::nonNull).collect(Collectors.joining("-"));
-        System.out.println(result);
+//        LinkedHashMap<String, Integer> sortedMap2 =  map.entrySet().stream().sorted(Map.Entry.comparingByValue()
+//                        .thenComparing(Map.Entry.comparingByKey())).collect(Collectors.toMap())
+//
+//        LinkedHashMap<String, Integer> sortedMap1 = map.entrySet().stream()
+//                .sorted(Map.Entry.<String, Integer>comparingByValue()
+//                        .thenComparing(Map.Entry.comparingByKey()))
+//                .collect(
+//                        LinkedHashMap::new, // Supplier for the collector: creates a new LinkedHashMap
+//                        (m, n) -> m.put(n.getKey(), n.getValue()), // Accumulator: puts each entry into the map
+//                        LinkedHashMap::putAll // Combiner: combines the maps in case of parallel streams (not used here)
+//                );
+
+
+
+//
+//        List<String> names = Arrays.asList("ram", null, "shyam", "baburao", null);
+//        String result = names.stream().filter(Objects::nonNull).collect(Collectors.joining("-"));
+//        System.out.println(result);
     }
 }
